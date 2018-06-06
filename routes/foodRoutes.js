@@ -36,11 +36,16 @@ module.exports = (app) => {
                 .then(business => {
                     if (business) {
                         //return message that object already exists
+                        //NOTE: Send appropriate HTTP message and handle on client side
                         res.send({ error: 'Erorr: This business already exists in the database.'});
                     } else {
                         new YelpBusiness(mapBusiness(req.body)).save()
                             .then(business => res.send(business));
                     }
-                })
+                });
+        })
+        .delete((req, res) => {
+            YelpBusiness.deleteOne({ yelp_id: req.query.yelpId})
+                .then(result => res.send(result));
         });
 }
