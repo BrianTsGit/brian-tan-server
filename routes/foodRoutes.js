@@ -26,7 +26,7 @@ const mapBusiness = (business) => {
 }
 
 module.exports = (app) => {
-    app.route('/food/yelpBusinesses')
+    app.route('/api/food/yelpBusinesses')
         .get((req, res) => {
             YelpBusiness.find()
                 .then(businesses => res.send(businesses));

@@ -25,7 +25,7 @@ const formatYelpBusinessData = businessData => {
 }
 
 module.exports = (app) => {
-    app.get('/yelp/businesses/search', (req, res) => {
+    app.get('/api/yelp/businesses/search', (req, res) => {
         let searchURL = '/businesses/search?term=' + req.query.term + '&location=' + req.query.location;
         axiosYelpInstance.get(searchURL)
             .then(response => {
