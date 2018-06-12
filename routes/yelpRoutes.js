@@ -24,16 +24,46 @@ const formatYelpBusinessData = businessData => {
     return formattedData;
 }
 
+const formatAutocompleteData = data => {
+    const autocompleteSuggestions = [];
+    if (data.categories) {
+        autocompleteSuggestions.concat(data.categories.map(cat => {
+            return cat.title;
+        }));
+    }
+    if (data.businesses) {
+        autocompleteSuggestions.concat(data.businesses.map(bus => {
+            return bus.name;
+        }));
+    }
+    if (data.terms) {
+        autocompleteSuggestions.concat(data.terms.map(term => {
+            return term.text;
+        }));
+    }
+    return autocompleteSuggestions;
+}
+
 module.exports = (app) => {
-    app.get('/api/yelp/businesses/search', (req, res) => {
-        let searchURL = '/businesses/search?term=' + req.query.term + '&location=' + req.query.location;
-        axiosYelpInstance.get(searchURL)
+    app.get('/api/yelp/businesses/search', (req, res, next) => {
+        axiosYelpInstance.get('/businesses/search?term=' + req.query.term + '&location=' + req.query.location)
             .then(response => {
                 const formattedData = formatYelpBusinessData(response.data);
                 res.json(formattedData);
             })
             .catch(err => {
-                res.send({error: 'Something Fudged Up!'});
+                next(err);
+            });
+    });
+
+    app.get('/api/yelp/autocomplete', (req, res, next) => {
+        axiosYelpInstance.get('autocomplete?text=' + req.query.term)
+            .then(response => {
+                const formattedData = formatAutocompleteData(response.data);
+                res.json(formattedData)
+            })
+            .catch(err => {
+                next(err);
             });
     });
 }
