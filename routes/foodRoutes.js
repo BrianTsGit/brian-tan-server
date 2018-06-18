@@ -3,7 +3,6 @@ const mongoose = require('mongoose');
 const YelpBusiness = mongoose.model('yelpBusinesses');
 
 const mapBusiness = (business) => {
-    console.log(business);
     return {
         yelp_id: business.yelp_id,
         name: business.name,
