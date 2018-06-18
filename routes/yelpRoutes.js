@@ -17,7 +17,8 @@ const formatYelpBusinessData = businessData => {
             rating: b.rating,
             price: b.price,
             categories: b.categories.map(c => c.title).join(', '),
-            location: b.location
+            location: b.location,
+            coordinates: b.coordinates
         };
     });
 

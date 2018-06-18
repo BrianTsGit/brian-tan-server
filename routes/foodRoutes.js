@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const YelpBusiness = mongoose.model('yelpBusinesses');
 
 const mapBusiness = (business) => {
+    console.log(business);
     return {
         yelp_id: business.yelp_id,
         name: business.name,
@@ -21,7 +22,8 @@ const mapBusiness = (business) => {
             country: business.location ? business.location.country : '',
             state: business.location ? business.location.state : '',
             display_address: business.location ? business.location.display_address : ''
-        } 
+        },
+        coordinates: business.coordinates 
     };
 }
 

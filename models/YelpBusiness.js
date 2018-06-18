@@ -19,6 +19,10 @@ const yelpBusinessSchema = new Schema({
         country: String,
         state: String,
         display_address: [String]
+    },
+    coordinates: {
+        latitude: Number,
+        longitude: Number
     } 
 });
 
