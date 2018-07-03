@@ -30,10 +30,10 @@ module.exports = (app) => {
     app.route('/api/food/yelpBusinesses')
         .get((req, res) => {
             YelpBusiness.find()
-                .then(businesses => res.send(businesses));
+                .then(businesses => res.json(businesses));
         })
         .post((req, res) => {
-            YelpBusiness.findOne({ yelp_id: req.body.id })
+            YelpBusiness.findOne({ yelp_id: req.body.yelp_id })
                 .then(business => {
                     if (business) {
                         //return message that object already exists
@@ -41,12 +41,12 @@ module.exports = (app) => {
                         res.send({ error: 'Erorr: This business already exists in the database.'});
                     } else {
                         new YelpBusiness(mapBusiness(req.body)).save()
-                            .then(business => res.send(business));
+                            .then(business => res.json(business));
                     }
                 });
         })
         .delete((req, res) => {
             YelpBusiness.deleteOne({ yelp_id: req.query.yelpId})
-                .then(result => res.send(result));
+                .then(result => res.json(result));
         });
 }

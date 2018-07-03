@@ -4,12 +4,17 @@ const mongoose = require('mongoose');
 const cookieSession = require('cookie-session');
 const passport = require('passport');
 const keys = require('./config/keys');
+
+//Must require the Mongoose Models in this common file 
 require('./models/User');
 require('./models/YelpBusiness');
+require('./models/MiscInterest');
 require('./services/passport'); //since passport uses mongoose.Users it should come after
 
+//Provide MongoDB credentials to Mongoose
 mongoose.connect(keys.mongoURI);
 
+//Create an instance of express
 const app = express(); 
 
 const allowCORS = (req, res, next) => { 
@@ -19,6 +24,7 @@ const allowCORS = (req, res, next) => {
     next();
 }
 
+//Tell express to use certain middleware
 app.use(allowCORS); 
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
@@ -34,9 +40,11 @@ app.use(passport.initialize());
 app.use(passport.session());
 /* done */
 
+//Connect express to routes
 require('./routes/authRoutes')(app);
 require('./routes/yelpRoutes')(app);
 require('./routes/foodRoutes')(app);
+require('./routes/miscRoutes')(app);
 
 //When we deploy to Heroku, the service will inject a PORT for us
 //in the enviroment object for us to use
