@@ -9,6 +9,7 @@ const keys = require('./config/keys');
 require('./models/User');
 require('./models/YelpBusiness');
 require('./models/MiscInterest');
+require('./models/TopRestaurants');
 require('./services/passport'); //since passport uses mongoose.Users it should come after
 
 //Provide MongoDB credentials to Mongoose

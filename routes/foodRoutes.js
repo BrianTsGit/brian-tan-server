@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 
 const YelpBusiness = mongoose.model('yelpBusinesses');
+const TopRestaurants = mongoose.model('topRestaurants');
 
 const mapBusiness = (business) => {
     return {
@@ -48,5 +49,11 @@ module.exports = (app) => {
         .delete((req, res) => {
             YelpBusiness.deleteOne({ yelp_id: req.query.yelpId})
                 .then(result => res.json(result));
+        });
+
+    app.route('/api/food/topRestaurants')
+        .get((req, res) => {
+            TopRestaurants.find()
+                .then(restaurants => res.json(restaurants));
         });
 }
