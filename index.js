@@ -10,6 +10,9 @@ require('./models/User');
 require('./models/YelpBusiness');
 require('./models/MiscInterest');
 require('./models/TopRestaurants');
+require('./models/FashionCreator');
+require('./models/FashionSection');
+require('./models/FashionArticle');
 require('./services/passport'); //since passport uses mongoose.Users it should come after
 
 //Provide MongoDB credentials to Mongoose
@@ -46,6 +49,16 @@ require('./routes/authRoutes')(app);
 require('./routes/yelpRoutes')(app);
 require('./routes/foodRoutes')(app);
 require('./routes/miscRoutes')(app);
+require('./routes/fashionMagazine/fashionArticleRoutes')(app);
+
+//Error handling middleware
+app.use('/api', (err, req, res, next) => {
+    res.status(err.status || 500);
+
+    res.send({
+        message: err.message
+    });
+});
 
 //When we deploy to Heroku, the service will inject a PORT for us
 //in the enviroment object for us to use
