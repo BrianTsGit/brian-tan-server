@@ -91,7 +91,7 @@ module.exports = (app) => {
                                 } else {
                                     fashionArticle.title = req.body.title;
                                     fashionArticle.image_url = req.body.image_url;
-                                    fashionArticle.creator = existingCreator_id; //note we set this to just he object id
+                                    fashionArticle.creator = existingCreator._id; //note we set this to just he object id
                                     fashionArticle.section = req.body.section._id; //note we set this to just he object id
                                     fashionArticle.category = req.body.category;
                                     fashionArticle.article_url = req.body.article_url;
@@ -112,8 +112,7 @@ module.exports = (app) => {
         .delete((req, res, next) => {
             FashionArticle.findById(req.params.id)
                 .then(fashionArticle => {
-                    fashionArticle.remove()
-                        .catch(next);
+                    fashionArticle.remove();
                 })
                 .catch(next);
         });
